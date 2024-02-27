@@ -1,136 +1,161 @@
 import React, { useState } from 'react';
-import { View, ActivityIndicator, StyleSheet, Text } from 'react-native';
-import { Input, Button } from 'react-native-elements';
-import { Auth } from 'aws-amplify';
-import { useDispatch, useSelector } from 'react-redux';
-import { startLoading, stopLoading } from '../redux/actions/loadingActions'; 
+import { View, StyleSheet, Text, TextInput, Button, Label } from 'react-native';
+import { signUp } from 'aws-amplify/auth';
 import colors from '../styles/appStyles';
-import { PhoneNumberUtil } from 'google-libphonenumber';
 
-const phoneUtil = PhoneNumberUtil.getInstance();
-
-const CustomerSignup = ({navigation}) => {
+const CustomerSignup = ({ navigation }) => {
+  // State variables for all attributes
   const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState(null)
-  const [phoneError, setPhoneError] = useState(null)
   const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState('');
-  const [signupError, setSignupError] = useState(null)
-  const isLoading = useSelector(state => state.loading.isLoading);
-  const dispatch = useDispatch();
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [birthdate, setBirthdate] = useState('');
+  const [givenName, setGivenName] = useState('');
+  const [familyName, setFamilyName] = useState('');
+  const [signupError, setSignupError] = useState('');
+  // ... State variables for your custom attributes
 
-const handlePhoneChange = (newPhone) => {
-    if(newPhone.length <= 10){
-        setPhone(newPhone)
-    }
- 
-  };
+  const handleSignup = async ({
+    isSignUpComplete, 
+    userId, 
+    nextStep,
+    phone_number,
+  }) => {
+try {
+     const { 
+      isSignUpComplete,
+      userId,
+      nextStep,
 
-  const handleSignup = async () => {
-    dispatch(startLoading());
-    console.log("Auth object: ", Auth)
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1000)); // artificial delay8
-      await Auth.signUp({
-        username: phone, 
+     
+    } = await signUp({
+       username: email,
         password,
-        attributes: { email, phone_number: phone }, 
+        options: {
+          userAttributes: {
+          "custom:userType": "customer",
+          },
+      
+          // ... your custom attributes
+        },
+        autoSignIn: true,
+        
       });
-      console.log("This is auth object", Auth)
-      console.log('Sign-up initiated - check your phone for verification code');
-      // ... Navigation or success actions 
-      navigation.navigate("CustomerVerification", {username: phone})
+  
+
+      console.log('Signup successful!');
+      navigation.navigate('CustomerDashboard', { username: email });
     } catch (error) {
       console.log('Error signing up:', error);
-      if(error.code === "UsernameExistsException"){
-        setSignupError("An account with that email or phone number already exists.")
-      } else if (error.code === "InvalidParameterException") {
-        setPhoneError("Please enter a valid phone number")
-      } else {
-        setSignupError("Unexpected error occured. Please try again")
-      }
-      // ... Handle errors 
-    } finally {
-      dispatch(stopLoading());
+      // ... Handle signup errors appropriately 
     }
   };
 
   return (
     <View style={styles.container}>
-      {isLoading && <ActivityIndicator size="large" color={colors.primary} />}
+    <Text style={styles.title}>Create Your Account</Text>
 
-      <Text style={styles.title}>Create Your Account</Text>
+    <View style={styles.form}>
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>Email</Text>
+        <TextInput
+          style={styles.input}
+          value={email}
+          onChangeText={setEmail} 
+          placeholder="youremail@example.com"
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+      </View>
 
-      <Input 
-        label="Email"
-        value={email}
-        onChangeText={setEmail}
-        placeholder="janedoe@email.com"
-        inputStyle={styles.input} 
-        errorMessage={emailError}
-      />
-      <Input
-        label="Phone Number (for Login)"
-        value={phone}
-        onChangeText={handlePhoneChange}
-        placeholder="555-555-5555"
-        inputStyle={styles.input}
-        keyboardType="phone-pad"
-        errorMessage={phoneError}
-      />
-      <Input 
-        label="Password"
-        value={password}
-        onChangeText={setPassword}
-        placeholder="Enter your password"
-        inputStyle={styles.input} 
-        secureTextEntry={true} 
-      />
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>Phone Number</Text>
+        <TextInput
+          style={styles.input}
+          value={phoneNumber}
+          onChangeText={setPhoneNumber}
+          placeholder="Enter your phone number"
+          keyboardType="phone-pad"
+          maxLength={10}
+        />
+      </View>
 
-      <Button 
-        title="Sign Up" 
-        buttonStyle={styles.button}  
-        onPress={handleSignup} 
-      />
 
-      <Text style={styles.loginLink}>
-        Already have an account? <Text style={styles.linkText}>Log In</Text>
-      </Text>
-    </View> 
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>Password</Text>
+        <TextInput
+          style={styles.input}
+          value={password}
+          onChangeText={setPassword}
+          placeholder="Enter your password"
+          secureTextEntry
+        />
+      </View>
+
+    
+  
+
+
+      {/* ... Input fields for custom attributes */}  
+
+    </View>
+
+    <Button title="Sign Up" onPress={handleSignup} style={styles.button} />
+
+    {signupError && (
+      <View style={styles.errorArea}> 
+        <Text style={styles.errorText}>{signupError}</Text>
+      </View>
+    )} 
+  </View>
   );
 };
 
 const styles = StyleSheet.create({
-   container: {
-     flex: 1,
-     justifyContent: 'center',
-     alignItems: 'center',
-     padding: 40, 
-     backgroundColor: colors.background, 
-   },
-   title: {
-     fontSize: 24,
-     fontWeight: '600',
-     marginBottom: 30,
-   },
-   input: {
-     borderWidth: 1, 
-     borderColor: '#E0E0E0', 
-     borderRadius: 8,
-     backgroundColor: colors.background,
-     marginBottom: 10, 
-   },
-   button: {
-     backgroundColor: colors.primary,  
-     borderRadius: 5,
-     padding: 15,
-   },
-   loginLink: {
-     marginTop: 20,
-   },
-   linkText: {
+  container: {
+    flex: 1,
+    backgroundColor: colors.background,
+    padding: 30,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
     color: colors.primary,
-   },
+    textAlign: 'center',
+    marginBottom: 30,
+  },
+  form: {
+    backgroundColor: colors.white,
+    padding: 20,
+    borderRadius: 10,
+    shadowColor: '#000',  // Subtle shadow effect
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+  },
+  inputGroup: {
+    marginBottom: 15,
+  },
+  label: {
+    fontSize: 16,
+    color: colors.primary,
+    marginBottom: 5,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: colors.lightGray,
+    borderRadius: 8,
+    padding: 10,
+    backgroundColor: colors.background, // Blend with the overall background
+  },
+  button: {
+    marginTop: 20,
+    backgroundColor: colors.primary,
+    padding: 15,
+    borderRadius: 8,
+  },
+  errorArea: {
+    // ... Add styles for error display
+  },
 });
 
-export default CustomerSignup; 
+export default CustomerSignup;

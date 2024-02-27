@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     showWelcomePage: true,
-    userRole: null,
+    userType: null,
 }
 
 const navigationSlice = createSlice({
@@ -12,11 +12,11 @@ const navigationSlice = createSlice({
         setWelcomePage(state, action){
             state.welcomePage = action.payload;
         },
-        setUserRole(state, action){
-            state.userRole = action.payload;
+        setUserType(state, action){
+            state.userType = action.payload;
         }
     }
 })
 
-export const { setWelcomePage, setUserRole } = navigationSlice.actions;
+export const { setWelcomePage, setUserType } = navigationSlice.actions;
 export default navigationSlice.reducer;

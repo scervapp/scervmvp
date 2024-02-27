@@ -1,32 +1,24 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-scervmvp-dev-191913-authRole",
-      "UnauthRoleArn": "arn:aws:iam::869535661202:role/amplify-scervmvp-dev-191913-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::869535661202:role/amplify-scervmvp-dev-191913-authRole",
+      "AuthRoleName": "amplify-scervmvp-dev-200150-authRole",
+      "UnauthRoleArn": "arn:aws:iam::869535661202:role/amplify-scervmvp-dev-200150-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::869535661202:role/amplify-scervmvp-dev-200150-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-scervmvp-dev-191913-deployment",
-      "UnauthRoleName": "amplify-scervmvp-dev-191913-unauthRole",
-      "StackName": "amplify-scervmvp-dev-191913",
-      "StackId": "arn:aws:cloudformation:us-east-1:869535661202:stack/amplify-scervmvp-dev-191913/00913280-d118-11ee-958b-12afa56e98a1",
-      "AmplifyAppId": "d3ma8i0lknz6jq"
-    }
-  },
-  "scervmvp": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-scervmvp-scervmvp-21928-authRole",
-      "UnauthRoleArn": "arn:aws:iam::869535661202:role/amplify-scervmvp-scervmvp-21928-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::869535661202:role/amplify-scervmvp-scervmvp-21928-authRole",
-      "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-scervmvp-scervmvp-21928-deployment",
-      "UnauthRoleName": "amplify-scervmvp-scervmvp-21928-unauthRole",
-      "StackName": "amplify-scervmvp-scervmvp-21928",
-      "StackId": "arn:aws:cloudformation:us-east-1:869535661202:stack/amplify-scervmvp-scervmvp-21928/e2318470-d21b-11ee-a6d1-0acda206d509",
-      "AmplifyAppId": "d3ma8i0lknz6jq"
+      "DeploymentBucketName": "amplify-scervmvp-dev-200150-deployment",
+      "UnauthRoleName": "amplify-scervmvp-dev-200150-unauthRole",
+      "StackName": "amplify-scervmvp-dev-200150",
+      "StackId": "arn:aws:cloudformation:us-east-1:869535661202:stack/amplify-scervmvp-dev-200150/ca7b9f80-d50b-11ee-b843-0e7298934835",
+      "AmplifyAppId": "d2lbe80u2dxi95"
     },
     "categories": {
       "auth": {
-        "scervmvpdc7a4d2c": {}
+        "scervmvpe6836be5": {
+          "userPoolId": "us-east-1_5jxrg9Yog",
+          "userPoolName": "ScervMVPUsers",
+          "webClientId": "6bb82fs1tsalfm2eo63m7mejtf",
+          "nativeClientId": "6bb82fs1tsalfm2eo63m7mejtf"
+        }
       }
     }
   }

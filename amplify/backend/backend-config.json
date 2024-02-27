@@ -1,31 +1,45 @@
 {
   "auth": {
-    "scervmvpdc7a4d2c": {
+    "scervmvpe6836be5": {
       "customAuth": false,
       "dependsOn": [],
-      "frontendAuthConfig": {
-        "mfaConfiguration": "OFF",
-        "mfaTypes": [
-          "SMS"
-        ],
-        "passwordProtectionSettings": {
-          "passwordPolicyCharacters": [],
-          "passwordPolicyMinLength": 8
-        },
-        "signupAttributes": [
-          "EMAIL"
-        ],
-        "socialProviders": [],
-        "usernameAttributes": [
-          "EMAIL",
-          "PHONE_NUMBER"
-        ],
-        "verificationMechanisms": [
-          "EMAIL"
-        ]
-      },
       "providerPlugin": "awscloudformation",
-      "service": "Cognito"
+      "service": "Cognito",
+      "serviceType": "imported"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_auth_scervmvpe6836be5_nativeClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "scervmvpe6836be5"
+        }
+      ]
+    },
+    "AMPLIFY_auth_scervmvpe6836be5_userPoolId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "scervmvpe6836be5"
+        }
+      ]
+    },
+    "AMPLIFY_auth_scervmvpe6836be5_userPoolName": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "scervmvpe6836be5"
+        }
+      ]
+    },
+    "AMPLIFY_auth_scervmvpe6836be5_webClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "scervmvpe6836be5"
+        }
+      ]
     }
   }
 }
