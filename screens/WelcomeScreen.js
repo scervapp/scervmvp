@@ -119,8 +119,8 @@ const styles = StyleSheet.create({
   },
   restaurantPrompt: {
     fontSize: 16,
-    color: colors.secondary,  // Color for the entire prompt
-    textDecorationLine: 'underline' 
+    color: colors.primary,  // Color for the entire prompt
+  
 
   }
 });

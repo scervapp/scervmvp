@@ -17,7 +17,7 @@ const Login = ({ navigation }) => {
                      password,
                      options: { authFlowType: "USER_PASSWORD_AUTH" }
                      });
-                navigation.navigate("CustomerDashboard");
+                navigation.navigate("WelcomeScreen");
               } catch (error) {
             
                 console.log('error signing in', error);
@@ -25,39 +25,39 @@ const Login = ({ navigation }) => {
               }
         }
 
-        const handleLogin = async () => {
+//         const handleLogin = async () => {
 
-            console.log("Username and password", username, password)
-        try {
-          const { nextStep } = await signIn({
-            username: username,
-            password: password,
-            options: { authFlowType: "USER_PASSWORD_AUTH" }
-        });
+//             console.log("Username and password", username, password)
+//         try {
+//           const { nextStep } = await signIn({
+//             username: username,
+//             password: password,
+//             options: { authFlowType: "USER_PASSWORD_AUTH" }
+//         });
 
-          if (nextStep.signInStep === "DONE"){
-            // Successful login, no further confirmation needed
-            const authSession = await fetchAuthSession();
-            const user = authSession.userSub; // or get attributes from authSession
-            if(user.attributes.userType === "customer") {
-                navigation.navigate("CustomerDashboard")
-            }   else if (user.attributes.userType === "restaurant") {
-                navigation.navigate("RestaurantDashboard")
-            } else if (user.attributes.userType === "admin") {
-                navigation.navigate("AdminDashboard")
-            } else {
+//           if (nextStep.signInStep === "DONE"){
+//             // Successful login, no further confirmation needed
+//             const authSession = await fetchAuthSession();
+//             const user = authSession.userSub; // or get attributes from authSession
+//             if(user.attributes.userType === "customer") {
+//                 navigation.navigate("CustomerDashboard")
+//             }   else if (user.attributes.userType === "restaurant") {
+//                 navigation.navigate("RestaurantDashboard")
+//             } else if (user.attributes.userType === "admin") {
+//                 navigation.navigate("AdminDashboard")
+//             } else {
                 
-            }
-          } else {
-           handleConfirmationStep(nextStep); 
-          }
+//             }
+//           } else {
+//            handleConfirmationStep(nextStep); 
+//           }
            
-    } catch (error) {
-        console.log("Login Error", error)
-        console.log("Details", error.message, error.code)
-        setLoginError("Login failed, please try again")
-    }
-}
+//     } catch (error) {
+//         console.log("Login Error", error)
+//         console.log("Details", error.message, error.code)
+//         setLoginError("Login failed, please try again")
+//     }
+// }
 
 const handleConfirmationStep = async (nextStep) => {
     try {

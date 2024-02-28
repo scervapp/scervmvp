@@ -12,6 +12,7 @@ import Login from '../screens/Login';
 import decodeIdToken from '../utils/decodedIdToken';
 import { checkAuthStatus } from '../service/authService';
 import { useAuth } from '../context/authContext';
+import RestaurantDashboard from '../screens/RestaurantDashboard';
 
 
 const Stack = createNativeStackNavigator();
@@ -79,6 +80,7 @@ const AppNavigator = () => {
                 <Stack.Screen name="RestaurantSignup" component={RestaurantSignup} options={{headerShown: false}} />
                 <Stack.Screen name="CustomerSignup" component={CustomerSignup} options={{headerShown: false}}/>
                 <Stack.Screen name="CustomerDashboard" component={CustomerDashboard} options={{headerShown: false}}/>
+                <Stack.Screen name="RestaurantDashboard" component={RestaurantDashboard} options={{headerShown: false}}/>
                 <Stack.Screen name="Login" component={Login} options={{headerShown: false}} />
    
              
