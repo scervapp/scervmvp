@@ -1,0 +1,106 @@
+type Restaurant @model {
+  id: ID!
+  name: String!
+  address: String!
+  city: String!
+  state: String!
+  zipcode: String!
+  geoLat: String!
+  geoLong: String!
+  cuisineType: String!
+  website: String 
+  phone: String
+  hoursOfOperation: [HoursOfOperation] @hasMany
+  priceRange: String
+  deliveryOptions: String
+  isActive: Boolean! 
+  metrics: RestaurantMetrics @hasOne 
+  menuItem: [MenuItem] @hasMany
+  order: [Order] @hasMany
+}
+
+type RestaurantMetrics @model {
+  id: ID!
+  turnoverRate: Float 
+  peakHours: String 
+  restaurant: Restaurant @belongsTo 
+}
+
+type MenuItem @model { 
+  id: ID!
+  name: String!
+  description: String
+  special: Boolean!
+  price: Float!
+  images: [String] 
+  restaurant: Restaurant @belongsTo
+  ratings: [Rating] @hasMany
+  dietaryFlags: [String] 
+  allergens: [String] 
+  orderItem: [OrderItem] @hasMany
+}
+
+type Rating @model {
+  id: ID!
+  rating: Int!  
+  review: String 
+  menuItem: MenuItem @belongsTo  
+  customer: Customer @belongsTo
+}
+
+type Order @model {
+  id: ID!
+  customer: Customer @belongsTo
+  restaurant: Restaurant @belongsTo
+  orderItems: [OrderItem] @hasMany
+  status: String! @default(value: "placed") 
+  orderTime: AWSDateTime! 
+}
+
+type OrderItem @model {
+  id: ID!
+  menuItem: MenuItem @belongsTo   
+  quantity: Int! 
+  order: Order @belongsTo
+
+}
+
+enum TableStatus {
+  AVAILABLE,
+  OCCUPIED,
+  NEEDS_CLEANING
+}
+
+type Table @model {
+  id: ID!
+  number: Int!
+  status: TableStatus!
+  seats: Int
+  currentOrder: Order
+}
+
+type HoursOfOperation @model {
+  id: ID!
+  restaurant: Restaurant @belongsTo
+  dayOfWeek: DayOfWeek!
+  openTime: String!
+  closeTime: String!
+}
+
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+# Add your Customer model below if you haven't already
+type Customer @model {
+    id: ID!
+    # ... customer-specific fields ...
+    rating: [Rating] @hasMany
+    order: [Order] @hasMany
+}

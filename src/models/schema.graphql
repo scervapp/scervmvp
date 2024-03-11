@@ -1,0 +1,56 @@
+type Restaurant @model {
+  id: ID!
+  name: String!
+  address: String!
+  cuisineType: String!
+  website: String 
+  phone: String
+  hoursOfOperation: String 
+  priceRange: String
+  deliveryOptions: String
+  isActive: Boolean! @default(value: true) 
+  metrics: RestaurantMetrics @connection(keyName: "byRestaurant", fields: ["id"]) 
+}
+
+type RestaurantMetrics @model {
+  id: ID!
+  turnoverRate: Float 
+  peakHours: String 
+  restaurantID: ID! @connection(fields: ["restaurantID"])  
+}
+
+type MenuItem @model { 
+  id: ID!
+  name: String!
+  description: String
+  price: Float!
+  images: [String] 
+  restaurantID: ID! @connection(fields: ["restaurantID"]) 
+  ratings: [Rating] @connection(keyName: "byMenuItem", fields: ["id"])
+  dietaryFlags: [String] 
+  allergens: [String] 
+}
+
+type Rating @model {
+  id: ID!
+  rating: Int!  
+  review: String 
+  menuItemID: ID! @connection(fields: ["menuItemID"])  
+  customerID: ID! @connection(fields: ["customerID"]) 
+}
+
+type Order @model {
+  id: ID!
+  customerID: ID! @connection(fields: ["customerID"]) 
+  restaurantID: ID! @connection(fields: ["restaurantID"])  
+  orderItems: [OrderItem] @connection(keyName: "byOrder", fields: ["id"])
+  status: String! @default(value: "placed") 
+  orderTime: AWSDateTime! 
+}
+
+type OrderItem @model {
+  id: ID!
+  menuItemID: ID! @connection(fields: ["menuItemID"])    
+  quantity: Int! 
+  orderID: ID! @connection(fields: ["orderID"])  
+}

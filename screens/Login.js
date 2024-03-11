@@ -17,7 +17,7 @@ const Login = ({ navigation }) => {
                      password,
                      options: { authFlowType: "USER_PASSWORD_AUTH" }
                      });
-                navigation.navigate("WelcomeScreen");
+                navigation.navigate("Welcome");
               } catch (error) {
             
                 console.log('error signing in', error);
